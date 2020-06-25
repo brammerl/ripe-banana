@@ -25,12 +25,7 @@ describe('reviewer routes', () => {
     return mongod.stop();
   });
   
-  // GET /reviewer
-  // [{
-  //   _id,
-  //   name,
-  //   company
-  // }]
+
   it('gets all reviewers via GET', () => {
     return Reviewer.create({
       id: expect.anything(),
@@ -48,6 +43,7 @@ describe('reviewer routes', () => {
       });
   }); 
 
+  //will need to add reviews information
   it('gets a reviewer by id via GET', () => {
     return Reviewer.create({
       id: expect.anything(),

@@ -20,19 +20,31 @@ describe('studio routes', () => {
     return mongoose.connection.dropDatabase();
   });
 
-  //   let studio; 
-  //   let film;
-  //   beforeEach(async() => {
-  //     film = await Film.create({
-  //       title: 'My Own Private Idaho',
-  //       studio: studio._id, 
-  //       released: 1991, 
-  //       cast: [{
-  //         role: 'Scott Favor',
-  //         actor: 'Keanu Reeves'
-  //       }]
-  //     });
-  //   });
+  let studio; 
+  let film;
+  
+  beforeEach(async() => {
+    studio = await Studio.create({
+      name: 'Portland Studio',
+      address: {
+        city: 'Portland',
+        state: 'Oregon',
+        country: 'US'
+      }
+    });
+  });
+  
+  beforeEach(async() => {
+    film = await Film.create({
+      title: 'My Own Private Idaho',
+      studio: studio._id, 
+      released: 1991, 
+      cast: [{
+        role: 'Scott Favor',
+        actor: 'Keanu Reeves'
+      }]
+    });
+  });
   
   afterAll(async() => {
     await mongoose.connection.close();
@@ -83,6 +95,11 @@ describe('studio routes', () => {
             city: 'Portland',
             state: 'Oregon',
             country: 'US'
+          }],
+          films: [{
+            _id: expect.anything(),
+            title: film.title,
+            studio: film.studio
           }],
           //   will need to have films info here eventually
           __v: 0,
