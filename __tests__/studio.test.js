@@ -34,10 +34,10 @@ describe('studio routes', () => {
   //     });
   //   });
   
-  //   afterAll(async() => {
-  //     await mongoose.connection.close();
-  //     return mongod.stop();
-  //   });
+  afterAll(async() => {
+    await mongoose.connection.close();
+    return mongod.stop();
+  });
   
   // GET /studios
   // [{ _id, name }]
