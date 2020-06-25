@@ -20,31 +20,31 @@ describe('studio routes', () => {
     return mongoose.connection.dropDatabase();
   });
 
-  let studio; 
-  let film;
+  // let studio; 
+  // let film;
   
-  beforeEach(async() => {
-    studio = await Studio.create({
-      name: 'Portland Studio',
-      address: {
-        city: 'Portland',
-        state: 'Oregon',
-        country: 'US'
-      }
-    });
-  });
+  // beforeEach(async() => {
+  //   studio = await Studio.create({
+  //     name: 'Portland Studio',
+  //     address: {
+  //       city: 'Portland',
+  //       state: 'Oregon',
+  //       country: 'US'
+  //     }
+  //   });
+  // });
   
-  beforeEach(async() => {
-    film = await Film.create({
-      title: 'My Own Private Idaho',
-      studio: studio._id, 
-      released: 1991, 
-      cast: [{
-        role: 'Scott Favor',
-        actor: 'Keanu Reeves'
-      }]
-    });
-  });
+  // beforeEach(async() => {
+  //   film = await Film.create({
+  //     title: 'My Own Private Idaho',
+  //     studio: studio.id, 
+  //     released: 1991, 
+  //     cast: [{
+  //       role: 'Scott Favor',
+  //       actor: 'Keanu Reeves'
+  //     }]
+  //   });
+  // });
   
   afterAll(async() => {
     await mongoose.connection.close();
@@ -76,15 +76,28 @@ describe('studio routes', () => {
   // GET /studios/:id
   //   { _id, name, address, films: [{ _id, title, studio }] }
 
-  it('gets a studio by id via GET', () => {
-    return Studio.create({
+  it.only('gets a studio by id via GET', async() => {
+    
+    const studio = await Studio.create({
       name: 'Portland Studio',
       address: {
         city: 'Portland',
         state: 'Oregon',
         country: 'US'
-      },
-    })
+      }
+    }); 
+
+    const film = await Film.create({
+      title: 'My Own Private Idaho',
+      studio: studio._id, 
+      released: 1991, 
+      cast: [{
+        role: 'Scott Favor',
+        actor: 'Keanu Reeves'
+      }]
+    });
+    
+    return request(app)
       .then(studio => request(app).get(`/api/v1/studios/${studio._id}`))
       .then(res => {
         expect(res.body).toEqual({
@@ -96,8 +109,8 @@ describe('studio routes', () => {
             state: 'Oregon',
             country: 'US'
           }],
-          films: [{
-            _id: expect.anything(),
+          film: [{
+            id: expect.anything(),
             title: film.title,
             studio: film.studio
           }],
