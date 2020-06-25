@@ -6,10 +6,10 @@ const connect = require('../lib/utils/connect');
 const request = require('supertest'); 
 const app = require('../lib/app'); 
 const Studio = require('../lib/models/Studio'); 
+const Film = require('../lib/models/Film'); 
 
 
-
-describe('poll routes', () => {
+describe('studio routes', () => {
 
   beforeAll(async() => {
     const uri = await mongod.getUri();
@@ -19,11 +19,25 @@ describe('poll routes', () => {
   beforeEach(() => {
     return mongoose.connection.dropDatabase();
   });
+
+  //   let studio; 
+  //   let film;
+  //   beforeEach(async() => {
+  //     film = await Film.create({
+  //       title: 'My Own Private Idaho',
+  //       studio: studio._id, 
+  //       released: 1991, 
+  //       cast: [{
+  //         role: 'Scott Favor',
+  //         actor: 'Keanu Reeves'
+  //       }]
+  //     });
+  //   });
   
-  afterAll(async() => {
-    await mongoose.connection.close();
-    return mongod.stop();
-  });
+  //   afterAll(async() => {
+  //     await mongoose.connection.close();
+  //     return mongod.stop();
+  //   });
   
   // GET /studios
   // [{ _id, name }]
