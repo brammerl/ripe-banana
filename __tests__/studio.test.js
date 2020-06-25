@@ -20,18 +20,6 @@ describe('poll routes', () => {
     return mongoose.connection.dropDatabase();
   });
   
-  //   let studio;
-  //   beforeEach(async() => {
-  //     studio = await Studio.create({
-  //       name: 'Portland Studio',
-  //       address: {
-  //         city: 'Portland',
-  //         state: 'Oregon',
-  //         country: 'US'
-  //       }
-  //     });
-  //   });
-  
   afterAll(async() => {
     await mongoose.connection.close();
     return mongod.stop();
@@ -59,7 +47,33 @@ describe('poll routes', () => {
       });
   }); 
 
+  // GET /studios/:id
+  //   { _id, name, address, films: [{ _id, title, studio }] }
 
+  it('gets a studio by id via GET', () => {
+    return Studio.create({
+      name: 'Portland Studio',
+      address: {
+        city: 'Portland',
+        state: 'Oregon',
+        country: 'US'
+      },
+    })
+      .then(studio => request(app).get(`/api/v1/studios/${studio._id}`))
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.anything(),
+          name: 'Portland Studio',
+          address: {
+            city: 'Portland',
+            state: 'Oregon',
+            country: 'US'
+          },
+          //   will need to have films info here eventually
+        //   __v: 0
+        });
+      });
+  });
   
 });
 
