@@ -64,13 +64,14 @@ describe('poll routes', () => {
         expect(res.body).toEqual({
           _id: expect.anything(),
           name: 'Portland Studio',
-          address: {
+          address: [{
+            _id: expect.anything(),
             city: 'Portland',
             state: 'Oregon',
             country: 'US'
-          },
+          }],
           //   will need to have films info here eventually
-        //   __v: 0
+          __v: 0,
         });
       });
   });
