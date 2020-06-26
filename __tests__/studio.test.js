@@ -110,9 +110,9 @@ describe('studio routes', () => {
             country: 'US'
           }],
           films: [{
-            id: expect.anything(),
+            _id: expect.anything(),
             title: film.title,
-            studio: film.studio
+            studio: film.studio.toString()
           }],
           //   will need to have films info here eventually
         });
