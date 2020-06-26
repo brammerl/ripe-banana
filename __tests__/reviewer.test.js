@@ -6,7 +6,9 @@ const connect = require('../lib/utils/connect');
 const request = require('supertest'); 
 const app = require('../lib/app'); 
 const Reviewer = require('../lib/models/Reviewer'); 
-
+const Review = require('../lib/models/Review');
+const Film = require('../lib/models/Film');
+const Studio = require('../lib/models/Studio');
 
 describe('reviewer routes', () => {
 
@@ -43,18 +45,44 @@ describe('reviewer routes', () => {
   }); 
 
   //will need to add reviews information
-  it('gets a reviewer by id via GET', () => {
-    return Reviewer.create({
-      id: expect.anything(),
+  it('gets a reviewer by id via GET', async() => {
+    const reviewer = await Reviewer.create({
       name: 'Breeann B',
       company: 'Alchemy Code Lab'
-    })
-      .then(reviewers => request(app).get(`/api/v1/reviewers/${reviewers._id}`))
+    });
+
+    const studio = await Studio.create({
+      name: 'Portland Studio'
+    });
+    
+    const film = await Film.create({
+      title: 'film title',
+      studio: studio._id,
+      released: 2020
+    });
+
+    await Review.create({
+      rating: 5,
+      reviewer: reviewer._id,
+      review: 'this movie was sooo good',
+      film: film._id
+    });
+    request(app)
+      .get(`/api/v1/reviewers/${reviewer._id}`)
       .then(res => {
         expect(res.body).toEqual({
           _id: expect.anything(),
           name: 'Breeann B',
           company: 'Alchemy Code Lab',
+          reviews: {
+            _id: expect.anything(),
+            rating: 5,
+            review: 'this movie was sooo good',
+            fim: {
+              _id: expect.anything(),
+              title: 'film title'
+            }
+          },
           __v: 0,
         });
       });
