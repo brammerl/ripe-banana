@@ -45,7 +45,7 @@ describe('film routes', () => {
     await Film.create({
       title: 'My Own Private Idaho',
       studio: {
-        _id: studio._id,
+        _id: studio.id,
         name: studio.name,
       },
       released: 1991, 
