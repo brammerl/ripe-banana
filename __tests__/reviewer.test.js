@@ -67,7 +67,8 @@ describe('reviewer routes', () => {
       review: 'this movie was sooo good',
       film: film._id
     });
-    request(app)
+    
+    return request(app)
       .get(`/api/v1/reviewers/${reviewer._id}`)
       .then(res => {
         expect(res.body).toEqual({
@@ -88,5 +89,39 @@ describe('reviewer routes', () => {
       });
   });
   
+  // it('creates a reviewer via POST', async()  => {
+  //   const reviewer = await Reviewer.create({
+  //     name: 'Breeann B',
+  //     company: 'Alchemy Code Lab'
+  //   });
+
+  //   const studio = await Studio.create({
+  //     name: 'Portland Studio'
+  //   });
+
+  //   const film = await Film.create({
+  //     title: 'film title',
+  //     studio: studio._id,
+  //     released: 2020
+  //   });
+
+  //   return request(app)
+  //     .post('/api/v1/reviewers/')
+  //     .send({
+  //       rating: 5,
+  //       reviewer: reviewer._id,
+  //       review: 'this movie was sooo good',
+  //       film: film._id
+  //     })
+  //     .then(res => {
+  //       expect(res.body).toEqual({
+  //         _id: expect.anything(),
+  //         rating: 5,
+  //         reviewer: reviewer._id,
+  //         review: 'this movie was sooo good',
+  //         film: film._id
+  //       });
+  //     });
+  // });
 });
 
