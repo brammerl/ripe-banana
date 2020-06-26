@@ -20,31 +20,31 @@ describe('studio routes', () => {
     return mongoose.connection.dropDatabase();
   });
 
-  // let studio; 
-  // let film;
+  let studio; 
+  let film;
   
-  // beforeEach(async() => {
-  //   studio = await Studio.create({
-  //     name: 'Portland Studio',
-  //     address: {
-  //       city: 'Portland',
-  //       state: 'Oregon',
-  //       country: 'US'
-  //     }
-  //   });
-  // });
+  beforeEach(async() => {
+    studio = await Studio.create({
+      name: 'Portland Studio',
+      address: {
+        city: 'Portland',
+        state: 'Oregon',
+        country: 'US'
+      }
+    });
+  });
   
-  // beforeEach(async() => {
-  //   film = await Film.create({
-  //     title: 'My Own Private Idaho',
-  //     studio: studio.id, 
-  //     released: 1991, 
-  //     cast: [{
-  //       role: 'Scott Favor',
-  //       actor: 'Keanu Reeves'
-  //     }]
-  //   });
-  // });
+  beforeEach(async() => {
+    film = await Film.create({
+      title: 'My Own Private Idaho',
+      studio: studio.id, 
+      released: 1991, 
+      cast: [{
+        role: 'Scott Favor',
+        actor: 'Keanu Reeves'
+      }]
+    });
+  });
   
   afterAll(async() => {
     await mongoose.connection.close();
@@ -54,17 +54,7 @@ describe('studio routes', () => {
   // GET /studios
   // [{ _id, name }]
   it('gets all studios via GET', () => {
-    return Studio.create({
-    //   id: expect.anything(),
-      name: 'Portland Studio',
-      address: {
-        city: 'Portland',
-        state: 'Oregon',
-        country: 'US'
-      },
-    //   __v: 0
-    })
-      .then(() => request(app).get('/api/v1/studios'))
+    return request(app).get('/api/v1/studios')
       .then(res => {
         expect(res.body).toEqual([{
           _id: expect.anything(), 
@@ -76,27 +66,7 @@ describe('studio routes', () => {
   // GET /studios/:id
   //   { _id, name, address, films: [{ _id, title, studio }] }
 
-  it('gets a studio by id via GET', async() => {
-    
-    const studio = await Studio.create({
-      name: 'Portland Studio',
-      address: {
-        city: 'Portland',
-        state: 'Oregon',
-        country: 'US'
-      }
-    }); 
-
-    const film = await Film.create({
-      title: 'My Own Private Idaho',
-      studio: studio._id, 
-      released: 1991, 
-      cast: [{
-        role: 'Scott Favor',
-        actor: 'Keanu Reeves'
-      }]
-    });
-    
+  it('gets a studio by id via GET', () => {
     return request(app)
       .get(`/api/v1/studios/${studio._id}`)
       .then(res => {
@@ -112,7 +82,33 @@ describe('studio routes', () => {
           films: [{
             _id: expect.anything(),
             title: film.title,
-            studio: film.studio.toString()
+            studio: studio.id
+          }],
+          //   will need to have films info here eventually
+        });
+      });
+  });
+
+  it('creates a new studio via POST', () => {
+    return request(app)
+      .post('/api/v1/studios/')
+      .send({
+        name: 'studio name',
+        address: [{
+          city: 'Portland',
+          state: 'OR',
+          country: 'USA'
+        }]
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.anything(),
+          name: 'studio name',
+          address: [{
+            _id: expect.anything(),
+            city: 'Portland',
+            state: 'OR',
+            country: 'USA'
           }]
         });
       });
