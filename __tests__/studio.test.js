@@ -119,7 +119,6 @@ describe('studio routes', () => {
         });
       });
   });
-  
 });
 
 
