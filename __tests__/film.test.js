@@ -122,19 +122,16 @@ describe('film routes', () => {
 
     const review = await Review.create({
       rating: 1, 
-      reviewer: {
-        name: reviewer.name
-      }, 
+      reviewer: reviewer._id, 
       review: 'The worst movie everrrr', 
-      film: [{
-        title: 'My Own Private Idaho'
-      }]
+      film: film._id
     }); 
 
     return request(app)
       .get(`/api/v1/films/${film._id}`)
       .then(res => {
         expect(res.body).toEqual({
+          _id: expect.anything(),
           title: 'My Own Private Idaho',
           studio: {
             _id: studio.id,
@@ -142,6 +139,7 @@ describe('film routes', () => {
           },
           released: 1991, 
           cast: [{
+            _id: expect.anything(),
             role: 'Scott Favor',
             actor: actor._id
           }],
@@ -149,6 +147,7 @@ describe('film routes', () => {
             _id: expect.anything(), 
             rating: review.rating, 
             reviewer: [{
+              _id: expect.anything(),
               name: reviewer.name
             }], 
             review: review.review
