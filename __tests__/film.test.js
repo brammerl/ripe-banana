@@ -44,10 +44,10 @@ describe('film routes', () => {
 
     await Film.create({
       title: 'My Own Private Idaho',
-      studio: [{
+      studio: {
         _id: studio._id,
         name: studio.name,
-      }],
+      },
       released: 1991, 
       cast: [{
         role: 'Scott Favor',
@@ -56,13 +56,14 @@ describe('film routes', () => {
     });
     
     return request(app)
-      .then(() => request(app).get('/api/v1/films'))
+      .get('/api/v1/films')
       .then(res => {
         expect(res.body).toEqual([{
           _id: expect.anything(), 
           title: 'My Own Private Idaho',
           released: 1991, 
           cast: [{
+            _id: expect.anything(),
             role: 'Scott Favor',
             actor: 'Keanu Reeves'
           }],
