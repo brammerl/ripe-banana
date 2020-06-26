@@ -98,7 +98,7 @@ describe('studio routes', () => {
     });
     
     return request(app)
-      .then(studio => request(app).get(`/api/v1/studios/${studio._id}`))
+      .get(`/api/v1/studios/${studio._id}`)
       .then(res => {
         expect(res.body).toEqual({
           _id: expect.anything(),
@@ -109,13 +109,12 @@ describe('studio routes', () => {
             state: 'Oregon',
             country: 'US'
           }],
-          film: [{
+          films: [{
             id: expect.anything(),
             title: film.title,
             studio: film.studio
           }],
           //   will need to have films info here eventually
-          __v: 0,
         });
       });
   });
