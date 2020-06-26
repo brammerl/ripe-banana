@@ -7,6 +7,7 @@ const request = require('supertest');
 const app = require('../lib/app'); 
 const Studio = require('../lib/models/Studio'); 
 const Film = require('../lib/models/Film'); 
+const Actor = require('../lib/models/Actor');
 
 
 describe('film routes', () => {
@@ -32,7 +33,11 @@ describe('film routes', () => {
   //   }]
 
   it('gets all studios via GET', async() => {
-    
+    const actor = await Actor.create({
+      name: 'actor name',
+      dob: Date(),
+      pob: 'Oakland, CA'
+    });
     const studio = await Studio.create({
       name: 'Portland Studio',
       address: {
@@ -51,7 +56,7 @@ describe('film routes', () => {
       released: 1991, 
       cast: [{
         role: 'Scott Favor',
-        actor: 'Keanu Reeves'
+        actor: actor._id
       }]
     });
     
@@ -65,13 +70,13 @@ describe('film routes', () => {
           cast: [{
             _id: expect.anything(),
             role: 'Scott Favor',
-            actor: 'Keanu Reeves'
+            actor: actor.id
           }],
-          studio: [{
-            _id: studio._id,
+          studio: {
+            _id: studio.id,
             name: studio.name,
-          }]
-        } 
+          }
+        }
         ]);
       });
   }); 
