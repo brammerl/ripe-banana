@@ -76,7 +76,7 @@ describe('studio routes', () => {
   // GET /studios/:id
   //   { _id, name, address, films: [{ _id, title, studio }] }
 
-  it.only('gets a studio by id via GET', async() => {
+  it('gets a studio by id via GET', async() => {
     
     const studio = await Studio.create({
       name: 'Portland Studio',
@@ -113,8 +113,7 @@ describe('studio routes', () => {
             _id: expect.anything(),
             title: film.title,
             studio: film.studio.toString()
-          }],
-          //   will need to have films info here eventually
+          }]
         });
       });
   });

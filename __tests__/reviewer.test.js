@@ -6,7 +6,6 @@ const connect = require('../lib/utils/connect');
 const request = require('supertest'); 
 const app = require('../lib/app'); 
 const Reviewer = require('../lib/models/Reviewer'); 
-const reviewers = require('../lib/routes/reviewers');
 
 
 describe('reviewer routes', () => {
