@@ -75,16 +75,16 @@ describe('reviewer routes', () => {
           _id: expect.anything(),
           name: 'Breeann B',
           company: 'Alchemy Code Lab',
-          reviews: {
+          reviews: [{
             _id: expect.anything(),
             rating: 5,
             review: 'this movie was sooo good',
-            fim: {
+            film: {
               _id: expect.anything(),
               title: 'film title'
-            }
-          },
-          __v: 0,
+            },
+            reviewer: expect.anything()
+          }]
         });
       });
   });
