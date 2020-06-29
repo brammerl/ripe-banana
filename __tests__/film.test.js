@@ -28,12 +28,6 @@ describe('film routes', () => {
     return mongod.stop();
   });
   
-  //   GET /films
-  //   [{
-  //       _id, title, released,
-  //       studio: { _id, name }
-  //   }]
-
   it('gets all studios via GET', async() => {
     const actor = await Actor.create({
       name: 'actor name',
@@ -84,9 +78,7 @@ describe('film routes', () => {
       });
   }); 
 
-
-
-  it.only('gets films by id via GET', async() => {
+  it('gets films by id via GET', async() => {
     const actor = await Actor.create({
       name: 'actor name',
       dob: Date(),
@@ -160,5 +152,56 @@ describe('film routes', () => {
       });
   }); 
 
+  it('creates an film via POST', async() => {
+    
+    const studio = await Studio.create({
+      name: 'Portland Studio',
+      address: {
+        city: 'Portland',
+        state: 'Oregon',
+        country: 'US'
+      }
+    }); 
 
+    const actor = await Actor.create({
+      name: 'actor name',
+      dob: Date(),
+      pob: 'Oakland, CA'
+    });
+
+    const film = await Film.create({
+      title: 'My Own Private Idaho',
+      studio: {
+        _id: studio.id,
+        name: studio.name,
+      },
+      released: 1991, 
+      cast: [{
+        role: 'Scott Favor',
+        actor: actor._id
+      }]
+    });
+    
+    return request(app)
+      .post('/api/v1/films')
+      .send({
+        title: 'My Own Private Idaho',
+        studio: studio._id,
+        released: 1992, 
+        cast: film.cast
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.anything(),
+          title: 'My Own Private Idaho',
+          studio: expect.anything(),
+          released: 1992, 
+          cast: [{
+            _id: expect.anything(),
+            role: 'Scott Favor', 
+            actor: actor._id.toString()
+          }]
+        });
+      });
+  });
 });
