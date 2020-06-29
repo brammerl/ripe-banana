@@ -7,16 +7,7 @@
 While the schemas should look like the data definitions above, these are descriptions of the data that should be returned from the various `GET` methods. You will need to use `lean`, `populate`, `select` and combining data to shape the appropriate response.
 
 
-## 1. GET /films
-
-```
-[{
-    _id, title, released,
-    studio: { _id, name }
-}]
-```
-
-## 2. GET /films/:id
+## . GET /films/:id
 
 ```
 {
@@ -34,22 +25,6 @@ While the schemas should look like the data definitions above, these are descrip
         review,
         reviewer: { _id, name }
     ]
-}
-```
-
-## 3. GET /reviewer/:id
-
-```
-{
-    _id,
-    name,
-    company,
-    reviews: [{
-        _id,
-        rating,
-        review,
-        film: { _id, title }
-    }]
 }
 ```
 
