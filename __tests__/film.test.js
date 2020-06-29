@@ -151,8 +151,7 @@ describe('film routes', () => {
               name: reviewer.name
             }], 
             review: review.review
-          }],
-          __v: 0,
+          }]
         });
       });
   }); 

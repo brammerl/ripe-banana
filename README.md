@@ -28,22 +28,6 @@ While the schemas should look like the data definitions above, these are descrip
 }
 ```
 
-## 3. GET /reviewer/:id
-
-```
-{
-    _id,
-    name,
-    company,
-    reviews: [{
-        _id,
-        rating,
-        review,
-        film: { _id, title }
-    }]
-}
-```
-
 ## 4. GET /reviews
 
 **limit to 100 highest rated**
