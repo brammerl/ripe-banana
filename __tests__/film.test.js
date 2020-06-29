@@ -134,23 +134,26 @@ describe('film routes', () => {
           _id: expect.anything(),
           title: 'My Own Private Idaho',
           studio: {
-            _id: studio.id,
-            name: studio.name,
+            _id: expect.anything(),
+            name: 'Portland Studio',
           },
           released: 1991, 
           cast: [{
             _id: expect.anything(),
             role: 'Scott Favor',
-            actor: actor._id
+            actor: [{
+              _id: expect.anything(), 
+              name: 'actor name'
+            }]
           }],
           reviews: [{
             _id: expect.anything(), 
             rating: review.rating, 
             reviewer: [{
               _id: expect.anything(),
-              name: reviewer.name
+              name: 'Breeann B'
             }], 
-            review: review.review
+            review: 'The worst movie everrrr'
           }]
         });
       });
