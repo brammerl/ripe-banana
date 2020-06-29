@@ -23,34 +23,46 @@ describe('review routes', () => {
     return mongoose.connection.dropDatabase();
   });
   
-  beforeEach(() => {
-    reviewer = Reviewer.create({
-      name: 'Breeann B',
-      company: 'Alchemy Code Lab'
-    });
-
-    studio = Studio.create({
-      name: 'Portland Studio'
-    });
-
-    film = Film.create({
-      title: 'film title',
-      studio: studio._id,
-      released: 2020
-    });
-  });
+ 
 
   afterAll(async() => {
     await mongoose.connection.close();
     return mongod.stop();
   });
 
-  it('creates a review via POST', () => {
+  it('creates a review via POST', async() => {
+    reviewer = await Reviewer.create({
+      name: 'Breeann B',
+      company: 'Alchemy Code Lab'
+    });
+
+    studio = await Studio.create({
+      name: 'Portland Studio'
+    });
+
+    film = await Film.create({
+      title: 'film title',
+      studio: studio._id,
+      released: 2020
+    });
+
     return request(app)
       .post('/api/v1/reviews/')
       .send({
         rating: 5,
-        reviewer: reviewer.id,
-        
-  })
+        reviewer: reviewer._id,
+        review: 'good film',
+        film: film._id   
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.anything(),
+          rating: 5,
+          reviewer: reviewer.id,
+          review: 'good film',
+          film: film.id,
+          __v: 0
+        });
+      });
+  });
 });
