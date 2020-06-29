@@ -104,5 +104,27 @@ describe('reviewer routes', () => {
         });
       });
   });
+
+  it('updates a reviewer via PATCH', async() => {
+    const reviewer = await Reviewer.create({
+      name: 'Breeann B',
+      company: 'Alchemy Code Lab'
+    });
+    
+    const update = {
+      name: 'Breeann M'
+    };
+
+    return request(app)
+      .patch(`/api/v1/reviewers/${reviewer._id}`)
+      .send(update)
+      .then(res => {
+        expect(res.body).toEqual({
+          name: 'Breeann M',
+          company: 'Alchemy Code Lab',
+          _id: expect.anything()
+        });
+      });
+  });
 });
 

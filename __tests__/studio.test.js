@@ -63,9 +63,6 @@ describe('studio routes', () => {
       });
   }); 
 
-  // GET /studios/:id
-  //   { _id, name, address, films: [{ _id, title, studio }] }
-
   it('gets a studio by id via GET', () => {
     return request(app)
       .get(`/api/v1/studios/${studio._id}`)
@@ -84,7 +81,6 @@ describe('studio routes', () => {
             title: film.title,
             studio: studio.id
           }],
-          //   will need to have films info here eventually
         });
       });
   });
