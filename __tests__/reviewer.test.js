@@ -89,39 +89,20 @@ describe('reviewer routes', () => {
       });
   });
   
-  // it('creates a reviewer via POST', async()  => {
-  //   const reviewer = await Reviewer.create({
-  //     name: 'Breeann B',
-  //     company: 'Alchemy Code Lab'
-  //   });
-
-  //   const studio = await Studio.create({
-  //     name: 'Portland Studio'
-  //   });
-
-  //   const film = await Film.create({
-  //     title: 'film title',
-  //     studio: studio._id,
-  //     released: 2020
-  //   });
-
-  //   return request(app)
-  //     .post('/api/v1/reviewers/')
-  //     .send({
-  //       rating: 5,
-  //       reviewer: reviewer._id,
-  //       review: 'this movie was sooo good',
-  //       film: film._id
-  //     })
-  //     .then(res => {
-  //       expect(res.body).toEqual({
-  //         _id: expect.anything(),
-  //         rating: 5,
-  //         reviewer: reviewer._id,
-  //         review: 'this movie was sooo good',
-  //         film: film._id
-  //       });
-  //     });
-  // });
+  it('creates a new reviewer via POST', () => {
+    return request(app)
+      .post('/api/v1/reviewers/')
+      .send({
+        name: 'Breeann B',
+        company: 'Alchemy Code Lab'
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.anything(),
+          name: 'Breeann B',
+          company: 'Alchemy Code Lab'
+        });
+      });
+  });
 });
 
