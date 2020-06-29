@@ -19,13 +19,6 @@ While the schemas should look like the data definitions above, these are descrip
 }]
 ```
 
-#### POST/PATCH
-
-* POST: 
-    Films 
-    Reviews 
-* PATCH: Only Reviewers can be updated.
-
 #### DELETE
 
 Reviews and Reviewers **However**:
