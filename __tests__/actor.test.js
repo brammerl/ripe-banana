@@ -73,7 +73,7 @@ describe('actor routes', () => {
       });
   });
   
-  it.only('gets actors by id via GET', async() => {
+  it('gets actors by id via GET', async() => {
     const actor = await Actor.create({
       name: 'actor name',
       dob: Date(),

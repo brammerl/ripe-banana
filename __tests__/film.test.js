@@ -141,20 +141,21 @@ describe('film routes', () => {
           cast: [{
             _id: expect.anything(),
             role: 'Scott Favor',
-            actor: [{
+            actor: {
               _id: expect.anything(), 
               name: 'actor name'
-            }]
+            }
           }],
           reviews: [{
             _id: expect.anything(), 
             rating: review.rating, 
-            reviewer: [{
+            reviewer: {
               _id: expect.anything(),
               name: 'Breeann B'
-            }], 
+            }, 
             review: 'The worst movie everrrr'
-          }]
+          }],
+          __v: 0
         });
       });
   }); 
