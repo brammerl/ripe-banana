@@ -6,20 +6,6 @@
 
 While the schemas should look like the data definitions above, these are descriptions of the data that should be returned from the various `GET` methods. You will need to use `lean`, `populate`, `select` and combining data to shape the appropriate response.
 
-## 1. GET /reviews
+1. #### DELETE
 
-**limit to 100 highest rated**
-
-```
-[{
-    _id,
-    rating,
-    review,
-    film: { _id, title }
-}]
-```
-
-#### DELETE
-
-Reviews and Reviewers **However**:
 1. Reviewers cannot be deleted if there are reviews
