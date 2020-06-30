@@ -128,7 +128,7 @@ describe('reviewer routes', () => {
   });
 
 
-  it('deletes review by ID via DELETE', async() => {
+  it('deletes reviewer by ID via DELETE', async() => {
     const reviewer = await Reviewer.create({
       name: 'Breeann B',
       company: 'Alchemy Code Lab'
@@ -143,14 +143,14 @@ describe('reviewer routes', () => {
       studio: studio._id,
       released: 2020
     });
-
+ 
     await Review.create({
       rating: 5,
       reviewer: reviewer._id,
       review: 'this movie was sooo good',
       film: film._id
     });
-
+    
     return request(app)
       .delete(`/api/v1/reviewers/${reviewer._id}`)
       .then(res => {
